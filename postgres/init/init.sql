@@ -11,14 +11,14 @@ CREATE TABLE users (
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role INT DEFAULT 0,
-    CONSTRAINT employee FOREIGN KEY (employee_id) REFERENCES employees(id)
+    CONSTRAINT employee FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
 );
 
 CREATE TABLE hours (
     employee_id INT NOT NULL,
     date DATE NOT NULL,
     amount INT CHECK (amount > 0 AND amount <= 24) NOT NULL,
-    CONSTRAINT employee FOREIGN KEY (employee_id) REFERENCES employees(id)
+    CONSTRAINT employee FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
 );
 
 -- For testing
