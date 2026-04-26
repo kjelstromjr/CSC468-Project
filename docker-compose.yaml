@@ -1,6 +1,7 @@
 services:
     postgres:
         build: postgres
+        image: kjelstromjr/csc468-postgres:latest
         container_name: postgres
         restart: unless-stopped
         environment:
@@ -14,10 +15,12 @@ services:
             interval: 5s
             timeout: 5s
             retries: 5
+
     node:
         build: node
+        image: kjelstromjr/csc468-node:latest
         container_name: node
-        ports: 
+        ports:
             - "8080:8080"
         depends_on:
             postgres:
