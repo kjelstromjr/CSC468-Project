@@ -177,7 +177,8 @@ document.getElementById('add-user-form').addEventListener('submit', async (e) =>
             body: JSON.stringify({
                 employee_id: parseInt(formData.get('employee_id')),
                 username: formData.get('username'),
-                password: formData.get('password')
+                password: formData.get('password'),
+                role: parseInt(formData.get("role"))
             })
         });
 

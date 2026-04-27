@@ -23,5 +23,5 @@ CREATE TABLE hours (
 
 -- For testing
 INSERT INTO employees (first_name, last_name, pay) VALUES ('Jeffrey', 'Kjelstrom', 20);
-INSERT INTO users (employee_id, username, password) VALUES (1, 'jeffreyk', 'password');
+INSERT INTO users (employee_id, username, password, role) VALUES (1, 'jeffreyk', 'password', 1);
 INSERT INTO hours (employee_id, date, amount) VALUES (1, '2024-01-01', 8);

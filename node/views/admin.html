@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Employee Management System</h1>
+        <div id="logout" onclick="logout()">Logout</div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="employees">Employees</button>
+            <button class="tab-btn" data-tab="hours">Hours Tracking</button>
+            <button class="tab-btn" data-tab="users">Users</button>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <!-- Employees Tab -->
+        <div id="employees" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Employees</h3>
+                    <div class="value" id="employee-count">0</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Add New Employee</h2>
+                <form id="add-employee-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pay">Hourly Pay ($)</label>
+                            <input type="number" id="pay" name="pay" min="1" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>All Employees</h2>
+                <div id="employees-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Hourly Pay</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employees-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hours Tab -->
+        <div id="hours" class="tab-content">
+            <div class="card">
+                <h2>Log Hours</h2>
+                <form id="add-hours-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hours_employee_id">Employee</label>
+                            <select id="hours_employee_id" name="employee_id" required>
+                                <option value="">Select an employee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Hours Worked</label>
+                            <input type="number" id="amount" name="amount" min="1" max="24" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Log Hours</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>View Employee Hours</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="view_hours_employee">Select Employee</label>
+                        <select id="view_hours_employee">
+                            <option value="">Select an employee</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="hours-table-container" class="hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hours-tbody">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="hours-empty" class="empty-state hidden">
+                    <p>No hours logged for this employee.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users" class="tab-content">
+            <div class="card">
+                <h2>Add New User</h2>
+                <form id="add-user-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user_employee_id">Employee</label>
+                            <select id="user_employee_id" name="employee_id" required>
+                                <option value="">Select an employee</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role" id="role">
+                                <option value="0">User</option>
+                                <option value="1">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>All Users</h2>
+                <div id="users-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Employee ID</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

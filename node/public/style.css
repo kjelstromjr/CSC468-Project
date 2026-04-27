@@ -22,6 +22,9 @@ header {
     color: #f8fafc;
     padding: 1.5rem 2rem;
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h1 {
@@ -276,4 +279,8 @@ tr:hover {
 .loading {
     opacity: 0.5;
     pointer-events: none;
+}
+
+#logout {
+    cursor: pointer;
 }
