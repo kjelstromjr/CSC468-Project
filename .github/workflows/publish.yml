@@ -35,6 +35,5 @@ jobs:
       - name: Deploy the updated stack
         run: |
           # The runner executes these commands directly on your CloudLab server
-          docker compose down
           docker compose pull
           docker compose up -d
