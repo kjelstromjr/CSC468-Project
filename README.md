@@ -1,3 +1,5 @@
+<img width="2556" height="1270" alt="Screenshot 2026-05-02 140637" src="https://github.com/user-attachments/assets/6e38ece9-e532-4a09-91fa-525b1e7015e2" />
+<img width="2553" height="1270" alt="Screenshot 2026-05-02 135904" src="https://github.com/user-attachments/assets/1eca05c1-e3d2-4909-ad16-aaeb77aadf29" />
 # CSC468-Project
 
 ## Overview
