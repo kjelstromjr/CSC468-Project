@@ -8,6 +8,20 @@ services:
             POSTGRES_USER: admin
             POSTGRES_PASSWORD: admin
             POSTGRES_DB: database
+        cpus: 0.5
+        mem_limit: 256m
+        memswap_limit: 512m
+        cpuset: "0"
+        cap_drop:
+            - ALL
+        cap_add:
+            - SETUID
+            - SETGID
+            - CHOWN
+            - DAC_OVERRIDE
+            - FOWNER
+        security_opt:
+            - no-new-privileges:true
         volumes:
             - postgres_data:/var/lib/postgresql
         healthcheck:
@@ -20,6 +34,15 @@ services:
         build: node
         image: kjelstromjr/csc468-node:latest
         container_name: node
+        user: "node"
+        cpus: 1
+        mem_limit: 1g
+        memswap_limit: 2g
+        cpuset: "1"
+        cap_drop:
+            - ALL
+        security_opt:
+            - no-new-privileges:true
         ports:
             - "8080:8080"
         depends_on:
