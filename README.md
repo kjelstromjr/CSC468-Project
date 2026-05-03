@@ -5,12 +5,12 @@ This project implements a simple to use managment platform for employees and hou
 
 ## Application Overview
 There are two main ways that this system can be used. As an admin, and as a user. Admins have full access to all information and capabilites in the system including managing employees, hours, and users.
-> Note that when an employee is deleted, all of the data accociated (users, hours) also gets deleted
+> Note that when an employee is deleted, all of the data associated (users, hours) also gets deleted
 
-<!-- <img width="2553" height="1270" alt="Screenshot 2026-05-02 135904" src="https://github.com/user-attachments/assets/1eca05c1-e3d2-4909-ad16-aaeb77aadf29" /> -->
+<img width="2553" height="1270" alt="Screenshot 2026-05-02 135904" src="https://github.com/user-attachments/assets/1eca05c1-e3d2-4909-ad16-aaeb77aadf29" />
 <br><br>
 Users are connected to a single employee and are only allowed to add and view hours for that specific employee.
-<!-- <img width="2556" height="1270" alt="Screenshot 2026-05-02 140637" src="https://github.com/user-attachments/assets/6e38ece9-e532-4a09-91fa-525b1e7015e2" /> -->
+<img width="2556" height="1270" alt="Screenshot 2026-05-02 140637" src="https://github.com/user-attachments/assets/6e38ece9-e532-4a09-91fa-525b1e7015e2" />
 
 ## Deployment
 > Note that this project does not need to be deployed on CloudLab and can be run on any system with Docker
@@ -58,9 +58,20 @@ All networking for this project is created by the docker compose file. Both cont
 ### Security
 There are three layers of security built into this project.
 
-The first is that both containers run on non-root users, albeit a litle differently. The node image comes with it's own non-root user, but you do have to explicitly say in the DockerFile to use that user. The postgres image also comes with it's own non-root user, however the server does need to run in admin for the inital setup. After which, the server automatically moves to a non-root user.
+The first is that both containers run on non-root users, albeit a little differently. The node image comes with it's own non-root user, but you do have to explicitly say in the DockerFile to use that user. The postgres image also comes with it's own non-root user, however the server does need to run in admin for the inital setup. After which, the server automatically moves to a non-root user.
 
 The second layer is the capabilites. This project follows a minimum required approach for the capabilites of each image. Node is given zero capabilites since it does not need any. Like mentioned previously, postgres has to do some setup initally as an admin. Therefore, some capabilites had to be given. These include `SETUID`, `SETGID`, `CHOWN`, `DAC_OVERRIDE`, and `FOWNER`. These are mainly needed for the setup of the files for storage and transitioning to a non-root user.
 > Note here that DAC_OVERRIDE and FOWNER override certain privilages and can expose the application to certain dangers.
 
-The third layer is simply not allowing additonal privilages to be set by either image.
+The third layer is simply not allowing additonal privilages to be set by either image. This is set using the `no-new-privileges` for each container.
+
+All of these layers of security play a role in preventing an unauthorized access to the main system. Running the containers as a non-root user prevent any exploits that could give an attacker admin level access to the main system. To add, the restriction of no new privileges also helps in preventing any attempt to elevate the current user. The capabilites also add another layer in limiting the amount of actions that can be take from within the container.
+
+### Resources
+Each of the containers are given limits to the amount of resources that each can use. This is set in `docker-compose.yaml` and is enforced by the Linux cgroup in each container. I chose to separate each container onto different CPU cores to avoid any "noisy neighbor" issues. You'll also notice that the node container gets more resources than postgres. This is different from instances where the database can get very large and complex and requires more resources. In the case of my project, I only have three tables. Node is doing a lot more work handling middware, JWT, and all of the endpoints. Thus, I thought it would be important to give node more resources. Below is an outline of what each container is given:
+
+#### Node
+The node container is given 1 CPU of processing power and 1GB of RAM. The container is also allowed to use an additional 1GB of swap memory for a total of 2GB of RAM usage allowed. The container is also set to run on CPU core 1.
+
+#### Postgres
+The postgres container is given 0.5 CPU of processing power and 256MB of memory. The container is also allowed to use an additional 256MB of swap memory for a total of 512MB of RAM usage allowed. The container is also set to run on CPU core 0.
